@@ -1,17 +1,25 @@
 "use client";
-import { useCallback } from "react";
+import { useCallback, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Particles from "react-tsparticles";
 import { loadSlim } from "tsparticles-slim";
-import { FaArrowRight } from "react-icons/fa";
+import { FaArrowRight, FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
+import Typewriter from "typewriter-effect";
 
 export default function Hero() {
   const particlesInit = useCallback(async (engine) => {
     await loadSlim(engine);
   }, []);
 
+  const [time, setTime] = useState(new Date());
+
+  useEffect(() => {
+    const interval = setInterval(() => setTime(new Date()), 1000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <section className="relative h-screen flex items-center justify-center text-center px-6 overflow-hidden bg-black">
+    <section className="relative h-screen flex items-center justify-center text-center px-6 sm:px-8 pt-20 overflow-hidden bg-black">
       {/* Particles Background */}
       <Particles
         id="tsparticles"
@@ -19,84 +27,94 @@ export default function Hero() {
         options={{
           background: { color: "transparent" },
           particles: {
-            number: { value: 70, density: { enable: true, value_area: 800 } },
+            number: { value: 80, density: { enable: true, area: 800 } },
             shape: { type: "circle" },
-            opacity: { value: 0.6, random: true },
+            opacity: { value: 0.7, random: true },
             size: { value: 3, random: true },
-            move: { enable: true, speed: 1.5 },
-            links: { enable: true, color: "#f3b52e", opacity: 0.3 },
+            move: { enable: true, speed: 2 },
+            links: { enable: true, color: "#f39c12", opacity: 0.4 },
           },
           interactivity: {
-            events: { onHover: { enable: true, mode: "repulse" } },
+            events: { onHover: { enable: true, mode: "bubble" } },
           },
         }}
         className="absolute top-0 left-0 w-full h-full z-0"
       />
 
       {/* Main Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center space-y-6">
-        {/* Floating Avatar */}
+      <div className="relative z-10 flex flex-col items-center justify-center space-y-5 sm:space-y-8">
+        {/* Floating 3D Avatar */}
         <motion.div
-          animate={{ y: [0, -10, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          className="w-32 h-32 md:w-40 md:h-40 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full shadow-lg flex items-center justify-center border-4 border-gray-800"
+          animate={{ rotateY: [0, 360] }}
+          transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+          className="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 bg-gradient-to-r from-yellow-500 to-orange-600 rounded-full shadow-2xl flex items-center justify-center border-4 border-gray-700"
         >
-          <span className="text-5xl md:text-6xl font-extrabold text-white">🚀</span>
+          <span className="text-5xl sm:text-6xl md:text-7xl font-extrabold text-white">🚀</span>
         </motion.div>
 
-        {/* Title */}
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: "easeOut" }}
-          className="text-4xl md:text-6xl font-extrabold text-white bg-gradient-to-r from-yellow-400 to-orange-500 text-transparent bg-clip-text"
-        >
-          Hi, I'm Saif Muhammad Sharif
-        </motion.h1>
+        {/* Typing Animation */}
+        <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold text-white bg-gradient-to-r from-yellow-400 to-orange-500 text-transparent bg-clip-text drop-shadow-lg">
+          <Typewriter
+            options={{
+              strings: [
+                "Hey, I'm Saif Muhammad Sharif",
+                "A Full-Stack Developer",
+                "Building Impactful Web Experiences",
+              ],
+              autoStart: true,
+              loop: true,
+            }}
+          />
+        </h1>
 
         {/* Subtitle */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 1, ease: "easeOut" }}
-          className="text-lg md:text-2xl text-gray-300"
+          className="text-base sm:text-lg md:text-2xl text-gray-300 max-w-lg sm:max-w-2xl"
         >
-          A Passionate Full-Stack Developer 🚀
+          Passionate about JavaScript, React & Node.js | Creating Seamless Digital Experiences 🚀
         </motion.p>
+
+        {/* Live Clock */}
+        <div className="text-yellow-400 font-bold text-lg sm:text-xl bg-gray-800 px-4 py-2 rounded-lg shadow-lg">
+          {time.toLocaleTimeString()}
+        </div>
 
         {/* CTA Buttons */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 1, ease: "easeOut" }}
-          className="flex space-x-4"
+          className="flex flex-wrap justify-center gap-4 sm:gap-6"
         >
           <a
             href="#projects"
-            className="relative group px-6 py-3 bg-yellow-400 text-black font-bold rounded-lg transition-all transform hover:scale-105 shadow-md"
+            className="px-5 py-3 sm:px-7 sm:py-4 bg-yellow-400 text-black font-bold rounded-lg transition-all transform hover:scale-110 hover:bg-orange-500 shadow-lg text-base sm:text-lg flex items-center gap-2"
           >
-            View Projects
-            <FaArrowRight className="inline-block ml-2 transition-transform group-hover:translate-x-1" />
+            View Projects <FaArrowRight className="text-lg" />
           </a>
           <a
             href="#contact"
-            className="relative group px-6 py-3 border-2 border-yellow-400 text-yellow-400 font-bold rounded-lg transition-all transform hover:bg-yellow-400 hover:text-black hover:scale-105 shadow-md"
+            className="px-5 py-3 sm:px-7 sm:py-4 border-2 border-yellow-400 text-yellow-400 font-bold rounded-lg transition-all transform hover:bg-yellow-400 hover:text-black hover:scale-110 shadow-lg text-base sm:text-lg"
           >
             Contact Me
           </a>
         </motion.div>
 
-        {/* About Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.9, duration: 1, ease: "easeOut" }}
-          className="mt-10 max-w-3xl mx-auto p-6 bg-gray-900/50 backdrop-blur-md rounded-lg border border-gray-800 shadow-lg text-lg text-gray-300"
-        >
-          <p>
-            I'm a full-stack developer specializing in modern web technologies like JavaScript, React, Node.js, and databases like MongoDB. I love crafting innovative solutions and building exceptional user experiences.
-          </p>
-        </motion.div>
+        {/* Social Media Icons */}
+        <div className="flex space-x-5 mt-5">
+          <a href="https://github.com/yourusername" target="_blank" className="text-gray-300 hover:text-yellow-400 text-2xl">
+            <FaGithub />
+          </a>
+          <a href="https://linkedin.com/in/yourusername" target="_blank" className="text-gray-300 hover:text-yellow-400 text-2xl">
+            <FaLinkedin />
+          </a>
+          <a href="https://twitter.com/yourusername" target="_blank" className="text-gray-300 hover:text-yellow-400 text-2xl">
+            <FaTwitter />
+          </a>
+        </div>
       </div>
     </section>
   );
