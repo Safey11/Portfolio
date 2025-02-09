@@ -6,25 +6,39 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 
 const projects = {
-  "ecommerce-website": {
-    title: "E-Commerce Website",
+  "consultancy-website": {
+    title: "Consultancy Website",
     description:
-      "A full-fledged e-commerce platform built with React, Next.js, and Firebase for authentication and database management.",
+      "A professional consultancy website built with Next.js and Tailwind CSS.",
     image: "/web.jpg",
-    details:
-      "Features: User authentication, payment integration, product listings, and a user-friendly dashboard.",
-    link: "https://iadnan.me/",
+    details: "Features expert consultancy services with a modern UI.",
+    link: "https://grbuu.com/",
   },
-  "portfolio-website": {
-    title: "Portfolio Website",
+  "solar-website": {
+    title: "Solar Website",
     description:
-      "A beautifully designed personal portfolio created with Next.js and Tailwind CSS.",
-    image: "/test.png",
-    details:
-      "Includes smooth animations, interactive sections, and a fully responsive modern design.",
+      "A solar energy company website designed for optimal user experience.",
+    image: "/solar.jpg",
+    details: "Promotes renewable energy solutions with interactive features.",
     link: "https://isafey.tech/",
   },
+  "movie-website": {
+    title: "Movie Website",
+    description:
+      "A feature-rich movie streaming platform with search and filter options.",
+    image: "/movie.jpg",
+    details: "Built with Next.js, Firebase, and Tailwind CSS.",
+    link: "https://66132acd26d115170e07c9ca--eloquent-malabi-f5de87.netlify.app/",
+  },
+  "business": {
+    title: "Software house website",
+    description: "A sleek clock application using React and Tailwind CSS.",
+    image: "/BS.jpg",
+    details: "Displays time with a beautiful UI.",
+    link: "https://smit-v3-giiy.vercel.app/",
+  },
 };
+
 
 export default function ProjectPage() {
   const { slug } = useParams();
@@ -92,13 +106,17 @@ export default function ProjectPage() {
       </p>
 
       {/* View Project Button */}
+      {/* View Project Button */}
       <a
         href={project.link}
+        target="_blank"
+        rel="noopener noreferrer"
         className="mt-5 sm:mt-6 bg-blue-600 hover:bg-blue-500 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg shadow-lg text-sm sm:text-base md:text-lg font-medium transition duration-300"
         data-aos="fade-up"
       >
         🚀 View Project
       </a>
+
     </div>
   );
 }

@@ -7,19 +7,23 @@ import Typewriter from "typewriter-effect";
 
 export default function WelcomeScreen({ setShowWelcome }) {
   const [visible, setVisible] = useState(true);
-  const [hovered, setHovered] = useState(false);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
       setVisible(false);
-      setTimeout(() => setShowWelcome(false), 1000);
-    }, 5000);
-
+      setTimeout(() => setShowWelcome(false), 1200);
+    }, 6000);
     return () => clearTimeout(timeout);
   }, [setShowWelcome]);
 
   return (
-    <div className="h-screen w-full bg-black flex flex-col items-center justify-center px-4 relative overflow-hidden">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 1.8, ease: "easeInOut" }}
+      className="h-screen w-full bg-black flex flex-col items-center justify-center px-4 relative overflow-hidden"
+    >
       {/* Particle Background */}
       <Particles
         id="tsparticles"
@@ -27,123 +31,71 @@ export default function WelcomeScreen({ setShowWelcome }) {
         options={{
           fullScreen: { enable: true },
           particles: {
-            number: { value: 100, density: { enable: true, area: 800 } },
-            color: { value: ["#0099ff", "#ffffff", "#00ff99"] },
+            number: { value: 200, density: { enable: true, area: 900 } },
+            color: { value: ["#00ffcc", "#ffffff", "#ff6600"] },
             shape: { type: "circle" },
-            opacity: { value: 0.6, random: true },
+            opacity: { value: 0.8, random: true },
             size: { value: 3, random: true },
-            move: { enable: true, speed: 1.5, outModes: "out" },
+            move: { enable: true, speed: 5, outModes: "out" },
           },
           interactivity: {
-            events: { onHover: { enable: true, mode: "repulse" } },
-            modes: { repulse: { distance: 120, duration: 0.4 } },
+            events: { onHover: { enable: true, mode: "bubble" } },
+            modes: { bubble: { size: 12, distance: 220 } },
           },
         }}
         className="absolute inset-0"
       />
 
-      {/* Quantum Distortion Portal Effect */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 0.7, scale: [1, 1.1, 1] }}
-        exit={{ opacity: 0, scale: 1.2 }}
-        transition={{ duration: 2, ease: "easeOut" }}
-        className={`absolute w-[600px] h-[600px] bg-blue-500 blur-[120px] opacity-50 rounded-full mix-blend-overlay ${
-          hovered ? "animate-warp" : "animate-pulse"
-        }`}
-      />
+      {/* VR Grid Background */}
+      <div className="absolute inset-0 grid-bg opacity-40"></div>
 
-      {/* Logo with Soft Zoom & Rotation Effect */}
-      <motion.img
-        src="/welcomeLogoV2.png"
-        alt="Welcome Logo"
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        exit={{ opacity: 0, scale: 0.9 }}
-        transition={{ duration: 1.5, ease: "easeOut" }}
-        className={`w-48 sm:w-64 md:w-72 lg:w-80 mb-6 transform ${
-          visible ? "opacity-100" : "opacity-0"
-        }`}
-        whileHover={{
-          rotate: [0, 1, -1, 1, -1, 0],
-          scale: 1.05,
-        }}
-      />
-
-      {/* Welcome Text with Animated Portal Effect */}
+      {/* Welcome Text with Glitch and Holographic Effects */}
       <motion.h1
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.9 }}
-        transition={{ duration: 1, ease: "easeOut" }}
-        className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white text-center relative ripple-effect"
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
+        transition={{ duration: 1.2, ease: "easeOut" }}
+        className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white text-center relative holographic-text glitch"
       >
-        <span className="neon-text">
+        <span>
           <Typewriter
             options={{
-              strings: ["Welcome to My Portfolio", "Crafting Digital Excellence"],
+              strings: ["Welcome To My Portfolio..."],
               autoStart: true,
               loop: true,
-              delay: 50,
+              delay: 40,
             }}
           />
         </span>
       </motion.h1>
 
-    
-
-      {/* Neon Glow & Ripple Hover Effect Styles */}
+      {/* Custom Styles for Glitch, Neon & VR Effects */}
       <style jsx>{`
-        .neon-text {
-          text-shadow: 0 0 5px #ffffff, 0 0 10px #ffffff, 0 0 20px #0099ff,
-            0 0 30px #0099ff, 0 0 40px #00ff99, 0 0 50px #00ff99;
+        .holographic-text {
+          text-shadow: 0 0 12px #ffffff, 0 0 24px #00ffcc, 0 0 48px #ff6600;
+          filter: drop-shadow(0px 0px 15px rgba(255, 255, 255, 0.8));
         }
-        .ripple-effect {
-          position: relative;
+        .glitch {
+          animation: glitch 1.2s infinite alternate;
         }
-        .ripple-effect:hover::after {
-          content: "";
-          position: absolute;
-          left: 50%;
-          top: 50%;
-          width: 300px;
-          height: 300px;
-          background: rgba(0, 153, 255, 0.2);
-          border-radius: 50%;
-          transform: translate(-50%, -50%) scale(0);
-          animation: ripple 1.5s infinite;
+        @keyframes glitch {
+          0% { transform: skewX(0deg); }
+          25% { transform: skewX(-8deg); }
+          50% { transform: skewX(8deg); }
+          75% { transform: skewX(-8deg); }
+          100% { transform: skewX(0deg); }
         }
-        @keyframes ripple {
-          from {
-            transform: translate(-50%, -50%) scale(0);
-            opacity: 1;
-          }
-          to {
-            transform: translate(-50%, -50%) scale(1.5);
-            opacity: 0;
-          }
+        .grid-bg {
+          background: linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+          background-size: 50px 50px;
+          animation: moveGrid 5s linear infinite;
         }
-
-        @keyframes warp {
-          0% {
-            transform: scale(1);
-            filter: hue-rotate(0deg);
-          }
-          50% {
-            transform: scale(1.2);
-            filter: hue-rotate(90deg);
-          }
-          100% {
-            transform: scale(1);
-            filter: hue-rotate(0deg);
-          }
-        }
-        .animate-warp {
-          animation: warp 2s infinite alternate ease-in-out;
+        @keyframes moveGrid {
+          from { background-position: 0 0; }
+          to { background-position: 50px 50px; }
         }
       `}</style>
-    </div>
+    </motion.div>
   );
 }

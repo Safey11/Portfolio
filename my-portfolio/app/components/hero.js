@@ -12,27 +12,38 @@ export default function Hero() {
   }, []);
 
   const [time, setTime] = useState(new Date());
+  const [greeting, setGreeting] = useState("");
 
   useEffect(() => {
     const interval = setInterval(() => setTime(new Date()), 1000);
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    const hour = time.getHours();
+    if (hour < 12) setGreeting("Good Morning ☀️");
+    else if (hour < 18) setGreeting("Good Afternoon 🌤️");
+    else setGreeting("Good Evening 🌙");
+  }, [time]);
+
   return (
     <section className="relative h-screen flex items-center justify-center text-center px-6 sm:px-8 pt-20 overflow-hidden bg-black">
-      {/* Particles Background */}
+      {/* Background Gradient with Animated Glow */}
+      <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black animate-gradient blur-xl"></div>
+
+      {/* 3D Particles Effect */}
       <Particles
         id="tsparticles"
         init={particlesInit}
         options={{
           background: { color: "transparent" },
           particles: {
-            number: { value: 80, density: { enable: true, area: 800 } },
+            number: { value: 120, density: { enable: true, area: 800 } },
             shape: { type: "circle" },
             opacity: { value: 0.7, random: true },
-            size: { value: 3, random: true },
+            size: { value: 4, random: true },
             move: { enable: true, speed: 2 },
-            links: { enable: true, color: "#f39c12", opacity: 0.4 },
+            links: { enable: true, color: "#facc15", opacity: 0.6 },
           },
           interactivity: {
             events: { onHover: { enable: true, mode: "bubble" } },
@@ -42,24 +53,32 @@ export default function Hero() {
       />
 
       {/* Main Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center space-y-5 sm:space-y-8">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1, ease: "easeOut" }}
+        className="relative z-10 flex flex-col items-center justify-center space-y-6 sm:space-y-8"
+      >
         {/* Floating 3D Avatar */}
         <motion.div
-          animate={{ rotateY: [0, 360] }}
-          transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
-          className="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 bg-gradient-to-r from-yellow-500 to-orange-600 rounded-full shadow-2xl flex items-center justify-center border-4 border-gray-700"
+          animate={{ y: [0, -10, 0] }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+          className="w-40 h-40 sm:w-48 sm:h-48 bg-yellow-500 shadow-2xl rounded-full flex items-center justify-center border-4 border-gray-700 transform hover:rotate-12"
         >
-          <span className="text-5xl sm:text-6xl md:text-7xl font-extrabold text-white">🚀</span>
+          <span className="text-6xl sm:text-7xl font-extrabold text-white">🚀</span>
         </motion.div>
 
-        {/* Typing Animation */}
-        <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold text-white bg-gradient-to-r from-yellow-400 to-orange-500 text-transparent bg-clip-text drop-shadow-lg">
+        {/* Greeting & Animated Name */}
+        <h2 className="text-xl sm:text-2xl font-medium text-gray-300 drop-shadow-lg">
+          {greeting}
+        </h2>
+        <h1 className="text-4xl sm:text-6xl font-extrabold text-white drop-shadow-xl tracking-wide">
           <Typewriter
             options={{
               strings: [
-                "Hey, I'm Saif Muhammad Sharif",
-                "A Full-Stack Developer",
-                "Building Impactful Web Experiences",
+                "Hey, I'm Saif Muhammad",
+                "A Full-Stack Developer 🚀",
+                "I Build Amazing Web Experiences",
               ],
               autoStart: true,
               loop: true,
@@ -67,55 +86,53 @@ export default function Hero() {
           />
         </h1>
 
-        {/* Subtitle */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 1, ease: "easeOut" }}
-          className="text-base sm:text-lg md:text-2xl text-gray-300 max-w-lg sm:max-w-2xl"
-        >
-          Passionate about JavaScript, React & Node.js | Creating Seamless Digital Experiences 🚀
-        </motion.p>
-
-        {/* Live Clock */}
-        <div className="text-yellow-400 font-bold text-lg sm:text-xl bg-gray-800 px-4 py-2 rounded-lg shadow-lg">
+        {/* Live Clock with Neon Glow */}
+        <div className="text-yellow-400 font-bold text-lg sm:text-xl bg-gray-900 px-6 py-3 rounded-lg shadow-lg border border-yellow-500 animate-pulse">
           {time.toLocaleTimeString()}
         </div>
 
-        {/* CTA Buttons */}
+        {/* CTA Buttons with Hover Effects */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 1, ease: "easeOut" }}
+          transition={{ delay: 0.5, duration: 1, ease: "easeOut" }}
           className="flex flex-wrap justify-center gap-4 sm:gap-6"
         >
           <a
             href="#projects"
-            className="px-5 py-3 sm:px-7 sm:py-4 bg-yellow-400 text-black font-bold rounded-lg transition-all transform hover:scale-110 hover:bg-orange-500 shadow-lg text-base sm:text-lg flex items-center gap-2"
+            className="px-6 py-3 sm:px-8 sm:py-4 bg-yellow-400 text-black font-bold rounded-lg transition-transform transform hover:scale-110 hover:bg-orange-500 shadow-xl flex items-center gap-2"
           >
             View Projects <FaArrowRight className="text-lg" />
           </a>
           <a
             href="#contact"
-            className="px-5 py-3 sm:px-7 sm:py-4 border-2 border-yellow-400 text-yellow-400 font-bold rounded-lg transition-all transform hover:bg-yellow-400 hover:text-black hover:scale-110 shadow-lg text-base sm:text-lg"
+            className="px-6 py-3 sm:px-8 sm:py-4 border-2 border-yellow-400 text-yellow-400 font-bold rounded-lg transition-transform transform hover:bg-yellow-400 hover:text-black hover:scale-110 shadow-xl"
           >
             Contact Me
           </a>
         </motion.div>
 
-        {/* Social Media Icons */}
-        <div className="flex space-x-5 mt-5">
-          <a href="https://github.com/yourusername" target="_blank" className="text-gray-300 hover:text-yellow-400 text-2xl">
-            <FaGithub />
-          </a>
-          <a href="https://linkedin.com/in/yourusername" target="_blank" className="text-gray-300 hover:text-yellow-400 text-2xl">
-            <FaLinkedin />
-          </a>
-          <a href="https://twitter.com/yourusername" target="_blank" className="text-gray-300 hover:text-yellow-400 text-2xl">
-            <FaTwitter />
-          </a>
-        </div>
-      </div>
+      {/* Social Media Icons with Hover Animations */}
+<div className="flex space-x-6 mt-6">
+{[
+  { Icon: FaGithub, link: "https://github.com/Safey11" },
+  { Icon: FaLinkedin, link: "https://www.linkedin.com/in/safey-safo-87810b278" },
+  { Icon: FaTwitter, link: "https://twitter.com/your-twitter-username" },
+].map(({ Icon, link }, index) => (
+  <motion.a
+    key={index}
+    whileHover={{ scale: 1.3, rotate: 10 }}
+    className="text-gray-300 hover:text-yellow-400 text-3xl cursor-pointer"
+    href={link}
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <Icon />
+  </motion.a>
+))}
+</div>
+
+      </motion.div>
     </section>
   );
 }

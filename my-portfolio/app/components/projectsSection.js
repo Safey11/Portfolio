@@ -8,18 +8,31 @@ import "aos/dist/aos.css";
 
 const projects = [
   {
-    title: "E-Commerce Website",
-    description: "A modern e-commerce platform with React, Next.js & Firebase.",
+    title: "Consultancy Website 🚀",
+    description: "A professional consultancy website built with Next.js and Tailwind CSS.",
     image: "/web.jpg",
-    slug: "ecommerce-website",
+    slug: "consultancy-website",
   },
   {
-    title: "Portfolio Website",
-    description: "A personal portfolio built with Next.js and Tailwind CSS.",
-    image: "/test.png",
-    slug: "portfolio-website",
+    title: "Solar Website ☀️",
+    description: "A solar energy company website designed for optimal user experience.",
+    image: "/solar.jpg",
+    slug: "solar-website",
+  },
+  {
+    title: "Movie Website 🎬",
+    description: "A movie streaming platform with advanced filtering and search features.",
+    image: "/movie.jpg",
+    slug: "movie-website", // Updated slug
+  },
+  {
+    title: "Software house website 👨‍💼",
+    description: "A sleek and functional clock application using React and Tailwind CSS.",
+    image: "/BS.jpg",
+    slug: "business", // Consistent slug
   },
 ];
+
 
 export default function ProjectsSection() {
   const sectionRef = useRef(null);
@@ -31,11 +44,13 @@ export default function ProjectsSection() {
       once: true,
     });
 
-    gsap.fromTo(
-      sectionRef.current,
-      { opacity: 0, y: 50 },
-      { opacity: 1, y: 0, duration: 1.5, ease: "power3.out" }
-    );
+    if (sectionRef.current) {
+      gsap.fromTo(
+        sectionRef.current,
+        { opacity: 0, y: 50 },
+        { opacity: 1, y: 0, duration: 1.5, ease: "power3.out" }
+      );
+    }
   }, []);
 
   return (
@@ -63,11 +78,11 @@ export default function ProjectsSection() {
             <div className="overflow-hidden rounded-lg">
               <Image
                 src={project.image}
-                alt={project.title}
+                alt={`Preview of ${project.title}`}
                 width={500}
                 height={300}
+                layout="responsive"
                 className="rounded-lg transition-transform duration-500 hover:scale-110"
-                style={{ width: "100%", height: "auto" }}
               />
             </div>
 

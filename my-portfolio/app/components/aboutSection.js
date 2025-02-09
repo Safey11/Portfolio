@@ -6,7 +6,7 @@ import "aos/dist/aos.css"; // Import AOS styles
 export default function AboutSection() {
   useEffect(() => {
     AOS.init({
-      duration: 1000, // Animation duration
+      duration: 1200, // Slightly increased animation duration for smoothness
       once: true, // Whether animation should happen only once
     });
   }, []);
@@ -14,40 +14,41 @@ export default function AboutSection() {
   return (
     <section
       id="about"
-      className="relative py-28 px-6 bg-gradient-to-b from-[#0d0d0d] via-[#111111] to-[#1a1a1a] text-white text-center overflow-hidden"
+      className="relative py-32 px-8 bg-gradient-to-b from-[#0a0a0a] via-[#141414] to-[#1f1f1f] text-white text-center overflow-hidden"
     >
       {/* Floating Background Glow */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle,_rgba(255,255,255,0.04)_0%,_rgba(0,0,0,0)_80%)] pointer-events-none"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle,_rgba(255,255,255,0.05)_0%,_rgba(0,0,0,0)_85%)] pointer-events-none"></div>
 
       <h2
-        className="text-5xl md:text-6xl font-bold mb-10 bg-gradient-to-r from-[#FF6B6B] via-[#FFA07A] to-[#FFD700] text-transparent bg-clip-text"
-        data-aos="fade-down" // AOS animation
+        className="text-6xl md:text-7xl font-extrabold mb-12 bg-gradient-to-r from-[#FF6B6B] via-[#FFA07A] to-[#FFD700] text-transparent bg-clip-text tracking-wide"
+        data-aos="fade-down"
       >
         About Me
       </h2>
 
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         <div
-          className="relative bg-[#1e1e1e]/50 backdrop-blur-xl border border-[#ffffff0d] p-10 rounded-2xl shadow-xl"
-          data-aos="fade-up" // AOS animation
+          className="relative bg-[#1e1e1e]/60 backdrop-blur-2xl border border-[#ffffff0f] p-12 rounded-3xl shadow-2xl"
+          data-aos="fade-up"
         >
           {/* Glow Effect */}
-          <div className="absolute inset-0 rounded-2xl bg-[radial-gradient(circle,_rgba(255,255,255,0.1)_0%,_rgba(0,0,0,0)_80%)] pointer-events-none"></div>
+          <div className="absolute inset-0 rounded-3xl bg-[radial-gradient(circle,_rgba(255,255,255,0.12)_0%,_rgba(0,0,0,0)_90%)] pointer-events-none"></div>
 
           <p
-            className="text-lg text-[#eaeaea] leading-relaxed"
-            data-aos="fade-right" // AOS animation
+            className="text-xl text-[#eaeaea] leading-relaxed tracking-wide"
+            data-aos="fade-right"
           >
             I'm a passionate <span className="text-[#FF6B6B] font-semibold">Full-Stack Developer</span>,
             specializing in <span className="text-[#FFA07A] font-semibold">React.js, Next.js, and Node.js</span>.
             I craft <strong>fast, scalable, and interactive</strong> solutions that blend performance with sleek UI/UX.
           </p>
           <p
-            className="text-lg text-[#c0c0c0] mt-6"
-            data-aos="fade-left" // AOS animation
+            className="text-lg text-[#d0d0d0] mt-8"
+            data-aos="fade-left"
           >
-            My focus is on building <strong>cutting-edge web experiences</strong> with <strong>modern aesthetics</strong>
-            while ensuring seamless interactions and intuitive navigation.
+            My focus is on building <strong>cutting-edge web experiences</strong> with <strong>modern aesthetics</strong>,
+            while ensuring seamless interactions and intuitive navigation. I love innovating with the latest technologies
+            to create immersive digital environments.
           </p>
         </div>
       </div>
