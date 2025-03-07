@@ -16,9 +16,11 @@
     "gsap": "^3.12.7",
     "next": "^15.1.6",
     "react": "^19.0.0",
+    "react-confetti": "^6.4.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.4.0",
     "react-tsparticles": "^2.12.2",
+    "react-use": "^17.6.0",
     "tsparticles": "^3.8.1",
     "tsparticles-slim": "^2.12.0",
     "use-sound": "^4.0.3"

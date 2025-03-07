@@ -1,36 +1,80 @@
 "use client";
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { FiMenu, FiX } from "react-icons/fi";
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { FiMenu, FiX, FiSun, FiMoon } from "react-icons/fi";
 import { Link } from "react-scroll";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
+  const menuRef = useRef(null);
+
+  // Detect Scroll and Change Navbar Background
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Close Mobile Menu on Click Outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
-    <nav className="fixed top-0 left-0 w-full bg-black bg-opacity-80 backdrop-blur-md shadow-md z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
+    <nav
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+        scrolled ? "bg-black/80 backdrop-blur-lg shadow-md" : "bg-transparent"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 py-4 flex justify-between items-center">
         {/* Logo */}
         <motion.h1
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-xl sm:text-2xl md:text-3xl font-bold text-yellow-400"
+          className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-yellow-400 to-orange-400 text-transparent bg-clip-text"
         >
           MyPortfolio
         </motion.h1>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex space-x-6 text-base sm:text-lg text-gray-300">
-          <Link to="about" smooth={true} duration={500} className="hover:text-yellow-400 transition cursor-pointer">About</Link>
-          <Link to="projects" smooth={true} duration={500} className="hover:text-yellow-400 transition cursor-pointer">Projects</Link>
-          <Link to="skills" smooth={true} duration={500} className="hover:text-yellow-400 transition cursor-pointer">Skills</Link>
-          <Link to="contact" smooth={true} duration={500} className="hover:text-yellow-400 transition cursor-pointer">Contact</Link>
+        <div className="hidden md:flex space-x-8 text-lg text-gray-300">
+          {["about", "projects", "skills", "contact"].map((section) => (
+            <Link
+              key={section}
+              to={section}
+              smooth={true}
+              duration={500}
+              spy={true}
+              activeClass="text-yellow-400"
+              className="relative cursor-pointer hover:text-yellow-400 transition-all after:block after:h-[2px] after:w-0 after:bg-yellow-400 after:transition-all after:duration-300 hover:after:w-full"
+            >
+              {section.charAt(0).toUpperCase() + section.slice(1)}
+            </Link>
+          ))}
         </div>
+
+        {/* Dark Mode Toggle */}
+        <button
+          onClick={() => setDarkMode(!darkMode)}
+          className="hidden md:block text-gray-300 text-xl ml-6 focus:outline-none"
+        >
+          {darkMode ? <FiSun /> : <FiMoon />}
+        </button>
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden text-gray-300 text-xl sm:text-2xl"
+          className="md:hidden text-gray-300 text-2xl focus:outline-none"
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? <FiX /> : <FiMenu />}
@@ -38,19 +82,33 @@ export default function Navbar() {
       </div>
 
       {/* Mobile Menu */}
-      {isOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-          className="absolute top-full left-0 w-full bg-black/95 text-gray-300 text-center py-5 space-y-4"
-        >
-          <Link to="about" smooth={true} duration={500} className="block py-2 hover:text-yellow-400 transition cursor-pointer" onClick={() => setIsOpen(false)}>About</Link>
-          <Link to="projects" smooth={true} duration={500} className="block py-2 hover:text-yellow-400 transition cursor-pointer" onClick={() => setIsOpen(false)}>Projects</Link>
-          <Link to="skills" smooth={true} duration={500} className="block py-2 hover:text-yellow-400 transition cursor-pointer" onClick={() => setIsOpen(false)}>Skills</Link>
-          <Link to="contact" smooth={true} duration={500} className="block py-2 hover:text-yellow-400 transition cursor-pointer" onClick={() => setIsOpen(false)}>Contact</Link>
-        </motion.div>
-      )}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            ref={menuRef}
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.3 }}
+            className="absolute top-full left-0 w-full bg-black/90 text-gray-300 text-center py-5 space-y-4 shadow-xl"
+          >
+            {["about", "projects", "skills", "contact"].map((section) => (
+              <Link
+                key={section}
+                to={section}
+                smooth={true}
+                duration={500}
+                spy={true}
+                activeClass="text-yellow-400"
+                className="block py-2 text-lg hover:text-yellow-400 transition cursor-pointer"
+                onClick={() => setIsOpen(false)}
+              >
+                {section.charAt(0).toUpperCase() + section.slice(1)}
+              </Link>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 }

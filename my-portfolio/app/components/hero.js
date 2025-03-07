@@ -1,16 +1,12 @@
 "use client";
-import { useCallback, useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import Particles from "react-tsparticles";
 import { loadSlim } from "tsparticles-slim";
-import { FaArrowRight, FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
 import Typewriter from "typewriter-effect";
 
 export default function Hero() {
-  const particlesInit = useCallback(async (engine) => {
-    await loadSlim(engine);
-  }, []);
-
   const [time, setTime] = useState(new Date());
   const [greeting, setGreeting] = useState("");
 
@@ -26,59 +22,69 @@ export default function Hero() {
     else setGreeting("Good Evening 🌙");
   }, [time]);
 
-  return (
-    <section className="relative h-screen flex items-center justify-center text-center px-6 sm:px-8 pt-20 overflow-hidden bg-black">
-      {/* Background Gradient with Animated Glow */}
-      <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black animate-gradient blur-xl"></div>
+  const particlesInit = useCallback(async (engine) => {
+    await loadSlim(engine);
+  }, []);
 
-      {/* 3D Particles Effect */}
+  return (
+    <section className="relative h-screen flex items-center justify-center text-center bg-black overflow-hidden">
       <Particles
         id="tsparticles"
         init={particlesInit}
         options={{
           background: { color: "transparent" },
           particles: {
-            number: { value: 120, density: { enable: true, area: 800 } },
+            number: { value: 300, density: { enable: true, area: 1000 } },
             shape: { type: "circle" },
+            size: { value: 3, random: true },
+            move: { enable: true, speed: 2, direction: "none" },
             opacity: { value: 0.7, random: true },
-            size: { value: 4, random: true },
-            move: { enable: true, speed: 2 },
-            links: { enable: true, color: "#facc15", opacity: 0.6 },
+            color: { value: ["#00ffff", "#ff00ff", "#ffcc00"] },
           },
           interactivity: {
-            events: { onHover: { enable: true, mode: "bubble" } },
+            events: { onHover: { enable: true, mode: "repulse" } },
           },
         }}
         className="absolute top-0 left-0 w-full h-full z-0"
       />
 
-      {/* Main Content */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
+        initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1, ease: "easeOut" }}
-        className="relative z-10 flex flex-col items-center justify-center space-y-6 sm:space-y-8"
+        transition={{ duration: 1.5, ease: "easeOut" }}
+        className="relative z-10 flex flex-col items-center justify-center space-y-6"
       >
-        {/* Floating 3D Avatar */}
+        {/* 3D Energy Sphere */}
         <motion.div
-          animate={{ y: [0, -10, 0] }}
-          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-          className="w-40 h-40 sm:w-48 sm:h-48 bg-yellow-500 shadow-2xl rounded-full flex items-center justify-center border-4 border-gray-700 transform hover:rotate-12"
+          animate={{
+            scale: [1, 1.2, 1],
+            rotate: [0, 10, -10, 0],
+            boxShadow: [
+              "0px 0px 20px rgba(0, 255, 255, 0.5)",
+              "0px 0px 40px rgba(0, 255, 255, 0.9)",
+              "0px 0px 20px rgba(0, 255, 255, 0.5)"
+            ],
+          }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          className="relative w-48 h-48 bg-gradient-to-r from-cyan-400 to-blue-600 shadow-[0px_0px_40px_#00ffff] rounded-full flex items-center justify-center border-4 border-gray-500 backdrop-blur-md"
         >
-          <span className="text-6xl sm:text-7xl font-extrabold text-white">🚀</span>
+          <div className="absolute w-52 h-52 bg-white rounded-full opacity-30 blur-3xl animate-pulse"></div>
+          <span className="text-6xl font-extrabold text-white drop-shadow-xl animate-spin-slow">
+            🌌
+          </span>
         </motion.div>
 
-        {/* Greeting & Animated Name */}
-        <h2 className="text-xl sm:text-2xl font-medium text-gray-300 drop-shadow-lg">
-          {greeting}
-        </h2>
-        <h1 className="text-4xl sm:text-6xl font-extrabold text-white drop-shadow-xl tracking-wide">
+        {/* Greeting */}
+        <h2 className="text-3xl text-gray-200 drop-shadow-lg font-semibold">{greeting}</h2>
+
+        {/* Animated Typewriter Text */}
+        <h1 className="text-5xl sm:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-indigo-500 drop-shadow-2xl">
           <Typewriter
             options={{
               strings: [
-                "Hey, I'm Saif Muhammad",
-                "A Full-Stack Developer 🚀",
-                "I Build Amazing Web Experiences",
+                "Welcome to My Universe 🚀",
+                "I Build Immersive Experiences",
+                "Let's Create the Future Together",
               ],
               autoStart: true,
               loop: true,
@@ -86,52 +92,49 @@ export default function Hero() {
           />
         </h1>
 
-        {/* Live Clock with Neon Glow */}
-        <div className="text-yellow-400 font-bold text-lg sm:text-xl bg-gray-900 px-6 py-3 rounded-lg shadow-lg border border-yellow-500 animate-pulse">
+        {/* Dynamic Time Display */}
+        <div className="text-cyan-300 text-xl bg-gray-900 px-6 py-3 rounded-xl border border-cyan-500 shadow-md animate-pulse backdrop-blur-lg">
           {time.toLocaleTimeString()}
         </div>
 
-        {/* CTA Buttons with Hover Effects */}
+        {/* Call-to-Action Buttons */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 1, ease: "easeOut" }}
-          className="flex flex-wrap justify-center gap-4 sm:gap-6"
+          transition={{ delay: 0.5, duration: 1 }}
+          className="flex space-x-6 mt-4"
         >
-          <a
+          <motion.a
             href="#projects"
-            className="px-6 py-3 sm:px-8 sm:py-4 bg-yellow-400 text-black font-bold rounded-lg transition-transform transform hover:scale-110 hover:bg-orange-500 shadow-xl flex items-center gap-2"
+            className="px-8 py-4 bg-blue-500 text-white font-bold rounded-lg shadow-lg transition-all"
+            whileHover={{ scale: 1.1, backgroundColor: "#2563EB" }}
+            whileTap={{ scale: 0.9 }}
           >
-            View Projects <FaArrowRight className="text-lg" />
-          </a>
-          <a
+            View Projects
+          </motion.a>
+          <motion.a
             href="#contact"
-            className="px-6 py-3 sm:px-8 sm:py-4 border-2 border-yellow-400 text-yellow-400 font-bold rounded-lg transition-transform transform hover:bg-yellow-400 hover:text-black hover:scale-110 shadow-xl"
+            className="px-8 py-4 border-2 border-blue-500 text-blue-500 font-bold rounded-lg shadow-lg transition-all"
+            whileHover={{ scale: 1.1, backgroundColor: "#2563EB", color: "#ffffff" }}
+            whileTap={{ scale: 0.9 }}
           >
             Contact Me
-          </a>
+          </motion.a>
         </motion.div>
 
-      {/* Social Media Icons with Hover Animations */}
-<div className="flex space-x-6 mt-6">
-{[
-  { Icon: FaGithub, link: "https://github.com/Safey11" },
-  { Icon: FaLinkedin, link: "https://www.linkedin.com/in/safey-safo-87810b278" },
-  { Icon: FaTwitter, link: "https://twitter.com/your-twitter-username" },
-].map(({ Icon, link }, index) => (
-  <motion.a
-    key={index}
-    whileHover={{ scale: 1.3, rotate: 10 }}
-    className="text-gray-300 hover:text-yellow-400 text-3xl cursor-pointer"
-    href={link}
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    <Icon />
-  </motion.a>
-))}
-</div>
-
+        {/* Social Media Links with Hover Effects */}
+        <div className="flex space-x-6 mt-6">
+          {[FaGithub, FaLinkedin, FaTwitter].map((Icon, index) => (
+            <motion.a
+              key={index}
+              whileHover={{ scale: 1.3, rotate: 5, color: "#00ffff" }}
+              className="text-gray-400 hover:text-blue-400 text-3xl cursor-pointer transition-all"
+              href="#"
+            >
+              <Icon />
+            </motion.a>
+          ))}
+        </div>
       </motion.div>
     </section>
   );
