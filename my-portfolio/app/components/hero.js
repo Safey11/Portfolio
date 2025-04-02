@@ -1,141 +1,65 @@
-"use client";
-import { useState, useEffect, useCallback } from "react";
-import { motion } from "framer-motion";
-import Particles from "react-tsparticles";
-import { loadSlim } from "tsparticles-slim";
-import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
-import Typewriter from "typewriter-effect";
+'use client';
+
+import Link from 'next/link';
+import { useEffect } from 'react';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 export default function Hero() {
-  const [time, setTime] = useState(new Date());
-  const [greeting, setGreeting] = useState("");
-
   useEffect(() => {
-    const interval = setInterval(() => setTime(new Date()), 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    const hour = time.getHours();
-    if (hour < 12) setGreeting("Good Morning ☀️");
-    else if (hour < 18) setGreeting("Good Afternoon 🌤️");
-    else setGreeting("Good Evening 🌙");
-  }, [time]);
-
-  const particlesInit = useCallback(async (engine) => {
-    await loadSlim(engine);
+    AOS.init({ duration: 1000, easing: 'ease-in-out' });
   }, []);
 
   return (
-    <section className="relative h-screen flex items-center justify-center text-center bg-black overflow-hidden">
-      <Particles
-        id="tsparticles"
-        init={particlesInit}
-        options={{
-          background: { color: "transparent" },
-          particles: {
-            number: { value: 300, density: { enable: true, area: 1000 } },
-            shape: { type: "circle" },
-            size: { value: 3, random: true },
-            move: { enable: true, speed: 2, direction: "none" },
-            opacity: { value: 0.7, random: true },
-            color: { value: ["#00ffff", "#ff00ff", "#ffcc00"] },
-          },
-          interactivity: {
-            events: { onHover: { enable: true, mode: "repulse" } },
-          },
-        }}
-        className="absolute top-0 left-0 w-full h-full z-0"
-      />
-
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1.5, ease: "easeOut" }}
-        className="relative z-10 flex flex-col items-center justify-center space-y-6"
+    <div className="relative isolate overflow-hidden bg-gray-900 h-screen flex items-center justify-center">
+      <svg
+        className="absolute inset-0 -z-10 h-full w-full stroke-white/10 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]"
+        aria-hidden="true"
       >
-        {/* 3D Energy Sphere */}
-        <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            rotate: [0, 10, -10, 0],
-            boxShadow: [
-              "0px 0px 20px rgba(0, 255, 255, 0.5)",
-              "0px 0px 40px rgba(0, 255, 255, 0.9)",
-              "0px 0px 20px rgba(0, 255, 255, 0.5)"
-            ],
+        <defs>
+          <pattern id="pattern-bg" width="200" height="200" x="100%" y="-1" patternUnits="userSpaceOnUse">
+            <path d="M.5 200V.5H200" fill="none"></path>
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" strokeWidth="0" fill="url(#pattern-bg)"></rect>
+      </svg>
+      <div
+        className="absolute left-[calc(50%-4rem)] top-10 -z-10 transform-gpu blur-3xl sm:left-[calc(50%-18rem)] lg:left-48 lg:top-[calc(50%-30rem)] xl:left-[calc(50%-24rem)]"
+        aria-hidden="true"
+      >
+        <div
+          className="aspect-[1108/632] w-[69.25rem] bg-gradient-to-r from-[#80caff] to-[#4f46e5] opacity-20"
+          style={{
+            clipPath:
+              'polygon(73.6% 51.7%, 91.7% 11.8%, 100% 46.4%, 97.4% 82.2%, 92.5% 84.9%, 75.7% 64%, 55.3% 47.5%, 46.5% 49.4%, 45% 62.9%, 50.3% 87.2%, 21.3% 64.1%, 0.1% 100%, 5.4% 51.1%, 21.4% 63.9%, 58.9% 0.2%, 73.6% 51.7%)',
           }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-          className="relative w-48 h-48 bg-gradient-to-r from-cyan-400 to-blue-600 shadow-[0px_0px_40px_#00ffff] rounded-full flex items-center justify-center border-4 border-gray-500 backdrop-blur-md"
-        >
-          <div className="absolute w-52 h-52 bg-white rounded-full opacity-30 blur-3xl animate-pulse"></div>
-          <span className="text-6xl font-extrabold text-white drop-shadow-xl animate-spin-slow">
-            🌌
-          </span>
-        </motion.div>
-
-        {/* Greeting */}
-        <h2 className="text-3xl text-gray-200 drop-shadow-lg font-semibold">{greeting}</h2>
-
-        {/* Animated Typewriter Text */}
-        <h1 className="text-5xl sm:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-indigo-500 drop-shadow-2xl">
-          <Typewriter
-            options={{
-              strings: [
-                "Welcome to My Universe 🚀",
-                "I Build Immersive Experiences",
-                "Let's Create the Future Together",
-              ],
-              autoStart: true,
-              loop: true,
-            }}
-          />
+        ></div>
+      </div>
+      <div className="max-w-full flex-shrink-0 px-4 text-center lg:mx-0 lg:max-w-3xl lg:pt-8" data-aos="fade-up">
+        <h1 className="mt-10 text-5xl font-bold tracking-tight text-white sm:text-6xl" data-aos="fade-down">
+          Hi, I'm <span className="text-sky-500">Saif Muhammad</span>
         </h1>
-
-        {/* Dynamic Time Display */}
-        <div className="text-cyan-300 text-xl bg-gray-900 px-6 py-3 rounded-xl border border-cyan-500 shadow-md animate-pulse backdrop-blur-lg">
-          {time.toLocaleTimeString()}
-        </div>
-
-        {/* Call-to-Action Buttons */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 1 }}
-          className="flex space-x-6 mt-4"
-        >
-          <motion.a
-            href="#projects"
-            className="px-8 py-4 bg-blue-500 text-white font-bold rounded-lg shadow-lg transition-all"
-            whileHover={{ scale: 1.1, backgroundColor: "#2563EB" }}
-            whileTap={{ scale: 0.9 }}
+        <p className="mt-4 text-lg leading-8 text-gray-300" data-aos="fade-up" data-aos-delay="200">
+          A Passionate Web & App Developer Crafting Engaging Digital Experiences
+        </p>
+        <p className="mt-2 text-md text-gray-400" data-aos="fade-up" data-aos-delay="400">
+          Specializing in modern web technologies, responsive design, and intuitive user experiences.
+        </p>
+        <div className="mt-5 flex items-center justify-center gap-x-6" data-aos="zoom-in" data-aos-delay="600">
+          <Link
+            href="/projects"
+            className="rounded-md bg-sky-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-sky-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400"
           >
-            View Projects
-          </motion.a>
-          <motion.a
-            href="#contact"
-            className="px-8 py-4 border-2 border-blue-500 text-blue-500 font-bold rounded-lg shadow-lg transition-all"
-            whileHover={{ scale: 1.1, backgroundColor: "#2563EB", color: "#ffffff" }}
-            whileTap={{ scale: 0.9 }}
+            View My Work →
+          </Link>
+          <Link
+            href="/contact"
+            className="rounded-md border border-white px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-white hover:text-gray-900 transition"
           >
-            Contact Me
-          </motion.a>
-        </motion.div>
-
-        {/* Social Media Links with Hover Effects */}
-        <div className="flex space-x-6 mt-6">
-          {[FaGithub, FaLinkedin, FaTwitter].map((Icon, index) => (
-            <motion.a
-              key={index}
-              whileHover={{ scale: 1.3, rotate: 5, color: "#00ffff" }}
-              className="text-gray-400 hover:text-blue-400 text-3xl cursor-pointer transition-all"
-              href="#"
-            >
-              <Icon />
-            </motion.a>
-          ))}
+            Let's Connect
+          </Link>
         </div>
-      </motion.div>
-    </section>
+      </div>
+    </div>
   );
 }

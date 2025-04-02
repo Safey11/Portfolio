@@ -1,60 +1,82 @@
-"use client";
-import { useEffect } from "react";
-import AOS from "aos";
-import "aos/dist/aos.css"; // Import AOS styles
+'use client';
+
+import Image from 'next/image';
+import { useEffect } from 'react';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 export default function AboutSection() {
   useEffect(() => {
-    AOS.init({
-      duration: 1200, // Smooth animation
-      once: true, // Only animate once
-    });
+    AOS.init({ duration: 1000, once: true });
   }, []);
 
   return (
-    <section
-      id="about"
-      className="relative py-24 px-6 md:py-32 md:px-12 bg-gradient-to-b from-[#0a0a0a] via-[#141414] to-[#1f1f1f] text-white text-center overflow-hidden"
-    >
-      {/* Floating Glow Background */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle,_rgba(255,255,255,0.04)_10%,_rgba(0,0,0,0)_90%)] pointer-events-none"></div>
-
-      <h2
-        className="text-5xl sm:text-6xl md:text-7xl font-extrabold mb-10 bg-gradient-to-r from-[#FF6B6B] via-[#FFA07A] to-[#FFD700] text-transparent bg-clip-text tracking-wide"
-        data-aos="fade-down"
-      >
-        About Me
-      </h2>
-
-      <div className="max-w-4xl mx-auto px-4 sm:px-8">
-        <div
-          className="relative bg-[#1e1e1e]/60 backdrop-blur-2xl border border-[#ffffff0f] p-6 sm:p-12 rounded-3xl shadow-xl"
+    <section className="py-20 bg-gray-50 dark:bg-gray-900">
+      <div className="max-w-6xl mx-auto px-6 lg:px-12 text-center">
+        {/* Heading */}
+        <h2 
+          className="inline-block bg-indigo-100 text-indigo-800 px-4 py-2 rounded-lg text-xs font-semibold tracking-widest uppercase"
           data-aos="fade-up"
         >
-          {/* Subtle Glow Effect */}
-          <div className="absolute inset-0 rounded-3xl bg-[radial-gradient(circle,_rgba(255,255,255,0.1)_10%,_rgba(0,0,0,0)_85%)] pointer-events-none"></div>
-
-          <p
-            className="text-lg sm:text-xl text-[#eaeaea] leading-relaxed tracking-wide"
-            data-aos="fade-right"
+          About Me
+        </h2>
+        
+        <h3 
+          className="mt-4 text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-white"
+          data-aos="fade-up" data-aos-delay="200"
+        >
+          Web Developer & Digital Creator
+        </h3>
+        
+        <p 
+          className="mt-4 max-w-2xl mx-auto text-lg text-gray-600 dark:text-gray-300"
+          data-aos="fade-up" data-aos-delay="400"
+        >
+          I specialize in building interactive and user-friendly websites. My goal is to help businesses establish a strong online presence through modern and scalable web solutions.
+        </p>
+      </div>
+      
+      {/* Services Section */}
+      <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-10 max-w-5xl mx-auto">
+        {services.map((service, index) => (
+          <div 
+            key={index} 
+            className="relative flex items-start p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-xl transition-shadow"
+            data-aos="fade-up" data-aos-delay={index * 200}
           >
-            I'm a passionate{" "}
-            <span className="text-[#FF6B6B] font-semibold">Full-Stack Developer</span>,
-            specializing in{" "}
-            <span className="text-[#FFA07A] font-semibold">React.js, Next.js, and Node.js</span>.
-            I craft <strong>fast, scalable, and interactive</strong> solutions that blend performance with sleek UI/UX.
-          </p>
-
-          <p
-            className="text-md sm:text-lg text-[#d0d0d0] mt-6 sm:mt-8"
-            data-aos="fade-left"
-          >
-            My focus is on building <strong>cutting-edge web experiences</strong> with
-            <strong> modern aesthetics</strong>, ensuring seamless interactions and intuitive navigation.
-            I love innovating with the latest technologies to create immersive digital environments.
-          </p>
-        </div>
+            <div className="h-14 w-14 rounded-md bg-indigo-600 flex items-center justify-center">
+              <Image src={service.icon} width={32} height={32} alt={service.title} />
+            </div>
+            <div className="ml-6">
+              <h3 className="text-lg font-bold text-gray-800 dark:text-white">{service.title}</h3>
+              <p className="mt-2 text-gray-600 dark:text-gray-400">{service.description}</p>
+            </div>
+          </div>
+        ))}
       </div>
     </section>
   );
 }
+
+const services = [
+  {
+    title: 'Web Development',
+    description: 'Creating responsive, modern, and scalable websites with cutting-edge technologies.',
+    icon: 'https://www.svgrepo.com/show/503163/api-settings.svg'
+  },
+  {
+    title: 'App Development',
+    description: 'Building high-performance web and mobile applications tailored to your needs.',
+    icon: 'https://www.svgrepo.com/show/503138/webpack.svg'
+  },
+  {
+    title: 'Website & Application Building',
+    description: 'Developing robust websites and applications for businesses and startups.',
+    icon: 'https://www.svgrepo.com/show/511771/dashboard-671.svg'
+  },
+  {
+    title: 'Software Development',
+    description: 'Crafting scalable and secure software solutions for various industries.',
+    icon: 'https://www.svgrepo.com/show/76267/free-commercial-label.svg'
+  }
+];
