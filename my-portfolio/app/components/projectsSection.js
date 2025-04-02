@@ -94,7 +94,7 @@ export default function ProjectsSection() {
       ></div>
 
       <section
-        id="projects"
+    id="projects"
         ref={sectionRef}
         className="py-12 md:py-20 bg-[#121212] text-white text-center"
       >
@@ -105,7 +105,7 @@ export default function ProjectsSection() {
           My Projects
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 max-w-6xl mx-auto px-4 md:px-6">
+        <div  className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 max-w-6xl mx-auto px-4 md:px-6">
           {projects.map((project, index) => (
             <div
               key={index}
