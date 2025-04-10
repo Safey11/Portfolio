@@ -25,7 +25,7 @@ export default function AboutSection() {
           className="mt-4 text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-white"
           data-aos="fade-up" data-aos-delay="200"
         >
-          Web Developer & Digital Creator
+          Web And App Devloper   
         </h3>
         
         <p 
