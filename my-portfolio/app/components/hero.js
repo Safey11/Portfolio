@@ -1,53 +1,100 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 export default function Hero() {
+  const roles = [
+    "Web Developer 🌐",
+    "App Developer 📱",
+    "Problem Solver 🧠",
+    "Creative Thinker ✨",
+  ];
+  const [currentRole, setCurrentRole] = useState(0);
+
   useEffect(() => {
-    AOS.init({ duration: 1000, easing: 'ease-in-out' });
+    AOS.init({ duration: 1000, easing: 'ease-in-out', once: true });
+
+    // Rotating roles effect
+    const interval = setInterval(() => {
+      setCurrentRole((prev) => (prev + 1) % roles.length);
+    }, 2500);
+
+    return () => clearInterval(interval);
   }, []);
 
   return (
-    <div className="relative isolate overflow-hidden bg-gray-900 h-screen flex items-center justify-center scroll-smooth">
-      <svg
-        className="absolute inset-0 -z-10 h-full w-full stroke-white/10 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]"
-        aria-hidden="true"
-      >
-        <defs>
-          <pattern id="pattern-bg" width="200" height="200" x="100%" y="-1" patternUnits="userSpaceOnUse">
-            <path d="M.5 200V.5H200" fill="none"></path>
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" strokeWidth="0" fill="url(#pattern-bg)"></rect>
-      </svg>
+    <div className="relative isolate overflow-hidden bg-gradient-to-b from-gray-900 via-black to-gray-950 h-screen flex items-center justify-center">
+      
+      {/* Glowing Orbs */}
+      <div className="absolute top-20 left-20 w-96 h-96 bg-sky-600/30 rounded-full blur-3xl animate-pulse"></div>
+      <div className="absolute bottom-20 right-20 w-96 h-96 bg-pink-600/30 rounded-full blur-3xl animate-pulse"></div>
 
-      <div className="max-w-full flex-shrink-0 px-4 text-center lg:mx-0 lg:max-w-3xl lg:pt-8" data-aos="fade-up">
-        <h1 className="mt-10 text-5xl font-bold tracking-tight text-white sm:text-6xl" data-aos="fade-down">
-          Hi, I'm <span className="text-sky-500">Saif Muhammad</span>
+      {/* Floating particles */}
+      <div className="absolute inset-0 -z-10">
+        <div className="w-2 h-2 bg-sky-400 rounded-full absolute top-1/4 left-1/3 animate-bounce"></div>
+        <div className="w-2 h-2 bg-pink-400 rounded-full absolute bottom-1/4 right-1/3 animate-ping"></div>
+        <div className="w-2 h-2 bg-purple-400 rounded-full absolute top-1/2 right-1/4 animate-bounce"></div>
+      </div>
+
+      {/* Hero Content */}
+      <div className="relative z-10 px-6 text-center max-w-4xl" data-aos="fade-up">
+        <h1 
+          className="mt-6 text-5xl text-white sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-tight"
+          data-aos="fade-down"
+        >
+          Hi, I'm{" "}
+          <span className="bg-gradient-to-r from-sky-400 via-indigo-400 to-pink-500 bg-clip-text text-transparent drop-shadow-lg">
+            Saif Muhammad
+          </span>
         </h1>
-        <p className="mt-4 text-lg leading-8 text-gray-300" data-aos="fade-up" data-aos-delay="200">
-          A Passionate Web & App Developer Crafting Engaging Digital Experiences
+
+        {/* Rotating Roles */}
+        <p 
+          className="mt-4 text-2xl sm:text-3xl font-semibold text-gray-300 h-10 transition-all duration-700"
+          data-aos="fade-up" 
+          data-aos-delay="200"
+        >
+          {roles[currentRole]}
         </p>
-        <p className="mt-2 text-md text-gray-400" data-aos="fade-up" data-aos-delay="400">
-          Specializing in modern web technologies, responsive design, and intuitive user experiences.
+
+        {/* Sub Text */}
+        <p 
+          className="mt-4 text-lg text-gray-400 max-w-xl mx-auto"
+          data-aos="fade-up" 
+          data-aos-delay="400"
+        >
+          I build sleek, modern, and scalable digital experiences that inspire, connect, and leave a lasting impact.
         </p>
-        <div className="mt-5 flex items-center justify-center gap-x-6" data-aos="zoom-in" data-aos-delay="600">
+
+        {/* Call-to-action Buttons */}
+        <div 
+          className="mt-8 flex flex-wrap items-center justify-center gap-6"
+          data-aos="zoom-in" 
+          data-aos-delay="600"
+        >
           <a
             href="#projects"
-            className="rounded-md bg-sky-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-sky-400 transition-all"
+            className="rounded-xl bg-gradient-to-r from-sky-500 to-indigo-500 px-7 py-3 text-lg font-semibold text-white shadow-lg hover:shadow-sky-500/50 hover:scale-105 transition-all duration-300"
           >
-            View My Work →
+            🚀 View My Work
           </a>
 
           <a
             href="#contact"
-            className="rounded-md border border-white px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-white hover:text-gray-900 transition-all"
+            className="rounded-xl border border-gray-400 px-7 py-3 text-lg font-semibold text-white hover:bg-white hover:text-gray-900 transition-all duration-300"
           >
-            Let's Connect
+            🤝 Let’s Connect
           </a>
         </div>
+      </div>
+
+      {/* Scroll Down Indicator */}
+      <div className="absolute bottom-10 flex justify-center w-full animate-bounce">
+        <a href="#about" className="text-gray-400 hover:text-sky-400 transition">
+          ↓ Scroll Down
+        </a>
       </div>
     </div>
   );
