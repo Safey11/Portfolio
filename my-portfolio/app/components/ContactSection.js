@@ -13,7 +13,10 @@ export default function ContactSection() {
   const buttonRef = useRef(null);
   const titleRef = useRef(null);
 
-  useEffect(() => {
+useEffect(() => {
+  const hasAnimated = sessionStorage.getItem("contact-animated");
+
+  if (!hasAnimated) {
     gsap.fromTo(
       titleRef.current,
       { opacity: 0, y: -50 },
@@ -32,9 +35,14 @@ export default function ContactSection() {
       }
     );
 
-    // ✅ Initialize EmailJS correctly
-    emailjs.init(process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY);
-  }, []);
+    // ✅ Mark animation as played
+    sessionStorage.setItem("contact-animated", "true");
+  }
+
+  // ✅ Initialize EmailJS once
+  emailjs.init(process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY);
+}, []);
+
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });

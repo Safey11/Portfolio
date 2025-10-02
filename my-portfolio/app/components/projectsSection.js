@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import AOS from "aos";
@@ -9,27 +9,31 @@ import "aos/dist/aos.css";
 const projects = [
   {
     title: "Consultancy Website 🚀",
-    description: "A professional consultancy website built with Next.js and Tailwind CSS.",
+    description:
+      "A professional consultancy website built with Next.js and Tailwind CSS.",
     image: "/web.jpg",
     slug: "consultancy-website",
   },
   {
     title: "Solar Website ☀️",
-    description: "A solar energy company website designed for optimal user experience.",
+    description:
+      "A solar energy company website designed for optimal user experience.",
     image: "/solar.jpg",
     slug: "solar-website",
   },
   {
     title: "Movie Website 🎬",
-    description: "A movie streaming platform with advanced filtering and search features.",
+    description:
+      "A movie streaming platform with advanced filtering and search features.",
     image: "/movie.jpg",
-    slug: "movie-website", // Updated slug
+    slug: "movie-website",
   },
   {
-    title: "Software house website 👨‍💼",
-    description: "A sleek and functional clock application using React and Tailwind CSS.",
+    title: "Software House Website 👨‍💼",
+    description:
+      "A sleek and functional software house website with modern UI/UX.",
     image: "/BS.jpg",
-    slug: "business", // Consistent slug
+    slug: "business",
   },
 ];
 
@@ -37,100 +41,93 @@ export default function ProjectsSection() {
   const sectionRef = useRef(null);
   const router = useRouter();
 
+  // Track which project is expanded on mobile
+  const [expanded, setExpanded] = useState(null);
+
   useEffect(() => {
-    // Initialize AOS animation
-    AOS.init({
-      duration: 1000,
-      once: true,
-    });
+    AOS.init({ duration: 1000, once: true });
 
-    if (sectionRef.current) {
-      gsap.fromTo(
-        sectionRef.current,
-        { opacity: 0, y: 50 },
-        { opacity: 1, y: 0, duration: 1.5, ease: "power3.out" }
-      );
-    }
-
-    // Custom Cursor Handling
-    const cursor = document.getElementById("custom-cursor");
-    let cursorX = 0;
-    let cursorY = 0;
-
-    const updateCursorPosition = (e) => {
-      cursorX = e.clientX;
-      cursorY = e.clientY;
-      cursor.style.left = `${cursorX - 15}px`;
-      cursor.style.top = `${cursorY - 15}px`;
-    };
-
-    const addCursorEffect = () => {
-      const cursorElements = document.querySelectorAll('.cursor-effect');
-
-      cursorElements.forEach((element) => {
-        element.addEventListener('mouseenter', () => {
-          cursor.classList.add('scale-150', 'opacity-100');
-        });
-
-        element.addEventListener('mouseleave', () => {
-          cursor.classList.remove('scale-150', 'opacity-100');
-        });
+    // Cursor only for desktop
+    if (window.innerWidth > 768) {
+      const cursor = document.getElementById("custom-cursor");
+      window.addEventListener("mousemove", (e) => {
+        cursor.style.left = `${e.clientX}px`;
+        cursor.style.top = `${e.clientY}px`;
       });
-    };
-
-    window.addEventListener("mousemove", updateCursorPosition);
-    addCursorEffect();
-
-    return () => {
-      window.removeEventListener("mousemove", updateCursorPosition);
-    };
+    }
   }, []);
 
   return (
     <>
+      {/* Custom Cursor (desktop only) */}
       <div
         id="custom-cursor"
-        className="fixed top-0 left-0 w-4 h-4 rounded-full bg-sky-500 pointer-events-none transition-all ease-in-out duration-300 opacity-70 z-50 transform -translate-x-1/2 -translate-y-1/2"
+        className="hidden md:block fixed w-12 h-12 rounded-full border-2 border-teal-400 pointer-events-none z-50 mix-blend-difference transition-transform duration-300 ease-in-out"
       ></div>
 
       <section
-    id="projects"
+        id="projects"
         ref={sectionRef}
-        className="py-12 md:py-20 bg-[#121212] text-white text-center"
+        className="py-16 md:py-24 bg-[#0a0a0a] text-white relative overflow-hidden"
       >
+        {/* Title */}
         <h2
-          className="text-4xl md:text-6xl font-extrabold mb-8 md:mb-12 bg-gradient-to-r from-teal-400 to-blue-500 text-transparent bg-clip-text"
+          className="text-5xl md:text-6xl font-extrabold mb-16 text-center tracking-tight bg-gradient-to-r from-teal-400 to-blue-500 bg-clip-text text-transparent"
           data-aos="fade-down"
         >
           My Projects
         </h2>
 
-        <div  className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 max-w-6xl mx-auto px-4 md:px-6">
+        {/* Projects Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-6xl mx-auto px-6">
           {projects.map((project, index) => (
             <div
               key={index}
               data-aos="fade-up"
-              data-aos-delay={index * 100}
-              className="bg-[#1e1e1e] p-4 md:p-6 rounded-xl shadow-lg backdrop-blur-md bg-opacity-70 border border-gray-700 cursor-pointer cursor-effect"
-              onClick={() => router.push(`/projects/${project.slug}`)}
+              data-aos-delay={index * 150}
+              className="relative group rounded-2xl overflow-hidden shadow-lg bg-gradient-to-br from-gray-900/60 to-gray-800/60 border border-gray-700 hover:border-teal-400 transition-all duration-500"
             >
-              <div className="overflow-hidden rounded-lg">
+              {/* Project Image */}
+              <div className="relative w-full h-64 md:h-72 overflow-hidden">
                 <Image
                   src={project.image}
-                  alt={`Preview of ${project.title}`}
-                  width={500}
-                  height={300}
-                  layout="responsive"
-                  className="rounded-lg"
+                  alt={project.title}
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-110"
                 />
+
+                {/* Overlay for desktop */}
+                <div className="absolute inset-0 hidden md:flex bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex-col justify-end p-6">
+                  <h3 className="text-2xl font-bold">{project.title}</h3>
+                  <p className="mt-2 text-gray-300">{project.description}</p>
+                  <button
+                    onClick={() => router.push(`/projects/${project.slug}`)}
+                    className="mt-4 px-5 py-2 bg-teal-500 text-black font-semibold rounded-lg shadow hover:bg-teal-400 transition"
+                  >
+                    View Project →
+                  </button>
+                </div>
               </div>
 
-              <h3 className="text-xl md:text-2xl font-bold mt-4 md:mt-6">
-                {project.title}
-              </h3>
-              <p className="text-gray-400 mt-2 md:mt-3 text-sm md:text-base">
-                {project.description}
-              </p>
+              {/* Mobile content (collapsible) */}
+              <div className="md:hidden p-4 bg-gray-900">
+                <h3 className="text-xl font-bold">{project.title}</h3>
+
+                {expanded === index && (
+                  <p className="mt-2 text-gray-400">{project.description}</p>
+                )}
+
+                <button
+                  onClick={() =>
+                    expanded === index
+                      ? router.push(`/projects/${project.slug}`)
+                      : setExpanded(index)
+                  }
+                  className="mt-4 w-full px-5 py-2 bg-teal-500 text-black font-semibold rounded-lg shadow hover:bg-teal-400 transition"
+                >
+                  {expanded === index ? "Go to Project →" : "View Project"}
+                </button>
+              </div>
             </div>
           ))}
         </div>

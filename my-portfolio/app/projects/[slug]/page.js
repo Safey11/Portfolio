@@ -30,7 +30,7 @@ const projects = {
     details: "Built with Next.js, Firebase, and Tailwind CSS.",
     link: "https://66132acd26d115170e07c9ca--eloquent-malabi-f5de87.netlify.app/",
   },
-  "business": {
+  business: {
     title: "Software house website",
     description: "A sleek clock application using React and Tailwind CSS.",
     image: "/BS.jpg",
@@ -39,14 +39,22 @@ const projects = {
   },
 };
 
-
 export default function ProjectPage() {
   const { slug } = useParams();
   const project = projects[slug];
   const router = useRouter();
 
   useEffect(() => {
-    AOS.init({ duration: 1000, once: true });
+    // Check if animations already ran
+    const alreadyAnimated = sessionStorage.getItem("projectPageAnimated");
+
+    if (!alreadyAnimated) {
+      AOS.init({ duration: 1000, once: true });
+      sessionStorage.setItem("projectPageAnimated", "true");
+    } else {
+      // Disable animations on back navigation
+      AOS.init({ disable: true });
+    }
   }, []);
 
   if (!project)
@@ -106,7 +114,6 @@ export default function ProjectPage() {
       </p>
 
       {/* View Project Button */}
-      {/* View Project Button */}
       <a
         href={project.link}
         target="_blank"
@@ -116,7 +123,6 @@ export default function ProjectPage() {
       >
         🚀 View Project
       </a>
-
     </div>
   );
 }

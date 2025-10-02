@@ -61,8 +61,7 @@ export default function Footer() {
 
 // Social Links Data
 const socialLinks = [
-  { href: "https://github.com/your-github", icon: FaGithub, label: "GitHub" },
-  { href: "https://linkedin.com/in/your-linkedin", icon: FaLinkedin, label: "LinkedIn" },
-  { href: "https://twitter.com/your-twitter", icon: FaTwitter, label: "Twitter" },
-  { href: "mailto:your-email@example.com", icon: FaEnvelope, label: "Email" },
+  { href: "https://github.com/Safey11", icon: FaGithub, label: "GitHub" },
+  { href: "https://www.linkedin.com/in/saif-muhammad-87810b278", icon: FaLinkedin, label: "LinkedIn" },
+  { href: "mailto:safeysafo@gmail.com", icon: FaEnvelope, label: "Email" },
 ];
