@@ -2,8 +2,7 @@
 import { useState, useEffect } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import WelcomeScreen from "./components/welcomeScreen"; // Import WelcomeScreen component
-import Head from "next/head";
+import WelcomeScreen from "./components/welcomeScreen"; 
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,29 +14,35 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-
-
 export default function RootLayout({ children }) {
-  const [showWelcome, setShowWelcome] = useState(true);
+  const [showWelcome, setShowWelcome] = useState(false);
 
   useEffect(() => {
-    // Always show the welcome screen on page reload
-    setShowWelcome(true);
+    const hasVisited = localStorage.getItem("hasVisited");
 
-    const timeout = setTimeout(() => {
+    if (!hasVisited) {
+      // ✅ First visit → show welcome screen
+      setShowWelcome(true);
+
+      // After welcome screen is done → mark as visited
+      setTimeout(() => {
+        setShowWelcome(false);
+        localStorage.setItem("hasVisited", "true");
+      }, 7000); // match your welcome screen duration
+    } else {
+      // ✅ Already visited → skip welcome
       setShowWelcome(false);
-    }, 3000); // Adjust timing as needed
-
-    return () => clearTimeout(timeout); // Cleanup timeout
+    }
   }, []);
 
   return (
     <html lang="en">
-
-
-      
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        {showWelcome ? <WelcomeScreen setShowWelcome={setShowWelcome} /> : children}
+        {showWelcome ? (
+          <WelcomeScreen setShowWelcome={setShowWelcome} />
+        ) : (
+          children
+        )}
       </body>
     </html>
   );
