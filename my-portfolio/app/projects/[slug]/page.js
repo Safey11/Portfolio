@@ -11,9 +11,18 @@ const projects = {
     description:
       "A professional consultancy website built with Next.js and Tailwind CSS.",
     image: "/web.jpg",
-    details: "Features expert consultancy services with a modern UI.",
+    details: "I have built this web for my International client It is a consultency agency website if you want one send me an email through contact form",
     link: "https://grbuu.com/",
   },
+  "Expense-Tracker": {
+  title: "Expense Tracker",
+  description:
+    "A smart web app to track and manage daily expenses effortlessly with clear insights.",
+  image: "/EXP.jpg",
+  details:
+    "Built with Next.js and modern UI design, it helps users monitor spending, set budgets, and make better financial decisions.",
+  link: "https://safey11-expense-tracker.vercel.app/",
+},
   "solar-website": {
     title: "Solar Website",
     description:
@@ -27,17 +36,18 @@ const projects = {
     description:
       "A feature-rich movie streaming platform with search and filter options.",
     image: "/movie.jpg",
-    details: "Built with Next.js, Firebase, and Tailwind CSS.",
+    details: "Built with React.js and Tailwind CSS.",
     link: "https://66132acd26d115170e07c9ca--eloquent-malabi-f5de87.netlify.app/",
   },
-  business: {
+  "business": {
     title: "Software house website",
-    description: "A sleek clock application using React and Tailwind CSS.",
+    description: "A sleek and functional software house website with modern UI/UX.",
     image: "/BS.jpg",
-    details: "Displays time with a beautiful UI.",
+    details: "Showcases services, projects, and client testimonials with a modern design.",
     link: "https://smit-v3-giiy.vercel.app/",
   },
 };
+
 
 export default function ProjectPage() {
   const { slug } = useParams();

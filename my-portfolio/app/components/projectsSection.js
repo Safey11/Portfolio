@@ -14,6 +14,13 @@ const projects = [
     image: "/web.jpg",
     slug: "consultancy-website",
   },
+    {
+    title: "Expense Tracker 💸",
+    description:
+      "A smart web app to track and manage daily expenses effortlessly with clear insights.",
+    image: "/EXP.jpg",
+    slug: "Expense-Tracker", // ← fix here
+  },
   {
     title: "Solar Website ☀️",
     description:
