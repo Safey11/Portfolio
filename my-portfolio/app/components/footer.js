@@ -52,7 +52,7 @@ export default function Footer() {
 
         {/* Copyright */}
         <p className="text-sm text-gray-500 mt-4">
-          © {new Date().getFullYear()} Adnan. All rights reserved.
+          © {new Date().getFullYear()} Saif. All rights reserved.
         </p>
       </div>
     </footer>
