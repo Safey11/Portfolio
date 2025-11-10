@@ -46,6 +46,13 @@ const projects = {
     details: "Showcases services, projects, and client testimonials with a modern design.",
     link: "https://smit-v3-giiy.vercel.app/",
   },
+  "Clock": {
+    title: "Clock",
+    description: "A Beautifull clock displaying the accurate time.",
+    image: "/clock.jpg",
+    details: "The clock shows the time accurate time according to the country",
+    link: "https://65720613653bcc00969f7dbf--velvety-arithmetic-1e09c9.netlify.app/",
+  },
 };
 
 

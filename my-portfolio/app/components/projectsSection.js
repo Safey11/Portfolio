@@ -42,6 +42,13 @@ const projects = [
     image: "/BS.jpg",
     slug: "business",
   },
+   {
+    title: "Clock⏰",
+    description:
+      "A Beautifull clock displaying the accurate time.",
+    image: "/clock.jpg",
+    slug: "Clock",
+  },
 ];
 
 export default function ProjectsSection() {

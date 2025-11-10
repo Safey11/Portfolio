@@ -2,7 +2,8 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
-import { FaReact, FaNodeJs, FaDatabase, FaHtml5, FaCss3Alt, FaJs } from "react-icons/fa";
+import { FaReact, FaNodeJs, FaDatabase, FaHtml5, FaCss3Alt, FaJs, FaPython } from "react-icons/fa";
+import { SiNextdotjs, SiLinux } from "react-icons/si";
 import { MdClose } from "react-icons/md";
 import AOS from "aos";
 import "aos/dist/aos.css"; // Import AOS styles
@@ -17,6 +18,14 @@ const skills = [
         "Advanced Topics": ["Hooks", "Routing"],
       },
       Learning: { "Performance Optimization": ["Code Splitting", "Lazy Loading"] },
+    },
+  },
+  {
+    name: "Next.js",
+    icon: <SiNextdotjs className="text-white text-7xl" />,
+    topics: {
+      Learned: { "Core Features": ["SSR", "SSG", "Routing"] },
+      Learning: { "Advanced": ["API Routes", "Middleware", "Image Optimization"] },
     },
   },
   {
@@ -57,6 +66,22 @@ const skills = [
     topics: {
       Learned: { Fundamentals: ["Variables", "Functions", "ES6+"] },
       Learning: { Advanced: ["Async/Await", "Web APIs"] },
+    },
+  },
+  {
+    name: "Python",
+    icon: <FaPython className="text-blue-400 text-7xl" />,
+    topics: {
+      Learned: { Basics: ["Variables", "Loops", "Functions"] },
+      Learning: { Advanced: ["OOP", "Flask/Django", "Data Processing"] },
+    },
+  },
+  {
+    name: "Linux",
+    icon: <SiLinux className="text-gray-400 text-7xl" />,
+    topics: {
+      Learned: { Basics: ["Terminal Commands", "File Management", "Permissions"] },
+      Learning: { Advanced: ["Shell Scripting", "System Administration"] },
     },
   },
 ];
